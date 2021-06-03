@@ -4,7 +4,8 @@ class BooksController < ApplicationController
   def show
     @newbook = Book.new
     @book = Book.find(params[:id])
-    @user = @book.user
+    @user = User.find(@book.user_id)
+    @book_comment = BookComment.new
   end
 
   def index
@@ -54,9 +55,9 @@ class BooksController < ApplicationController
 
   def ensure_correct_user
     @book = Book.find(params[:id])
-     unless @book.user == current_user
-     redirect_to books_path
-   end
+    unless @book.user == current_user
+    redirect_to books_path
+    end
   end
 
 end
